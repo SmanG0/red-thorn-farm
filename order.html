@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Order Red Thorn Farm</title>
+<meta name="description" content="Order Red Thorn sausages, biltong, and sauerkraut. Delivered across Nairobi in 2-5 business days." />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="enhancements.css" />
+<script>window.RTPAGE = { id: 'order', heroOverlay: false };</script>
+<style>
+
+/* ── LAYOUT ────────────────────────────────────────── */
+.order-layout {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px) clamp(80px, 10vw, 140px);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── STICKY CART PANEL ─────────────────────────────── */
+.cart-panel {
+  position: sticky;
+  top: 100px;
+}
+
+.cart-panel__inner {
+  border: 1px solid var(--hair);
+  background: var(--paper);
+}
+
+.cart-panel__head {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--hair);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-panel__title {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.cart-count-badge {
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 13px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-items {
+  padding: 0 20px;
+  min-height: 60px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hair);
+  gap: 10px;
+}
+
+.cart-item__name {
+  font-size: 13px;
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-item__qty {
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.cart-item__price {
+  font-family: var(--f-display);
+  font-size: 14px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.cart-item__remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color .2s;
+}
+.cart-item__remove:hover { color: var(--accent); }
+
+.cart-empty {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  padding: 18px 0;
+  text-align: center;
+}
+
+.cart-panel__total {
+  padding: 14px 20px;
+  border-top: 1px solid var(--hair);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.cart-panel__total-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cart-panel__total-amount {
+  font-family: var(--f-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ── PRODUCT GRID ──────────────────────────────────── */
+.products-section { margin-bottom: 40px; }
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.prod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.prod-card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s;
+}
+.prod-card:hover {
+  border-color: rgba(24,19,17,.3);
+  box-shadow: 0 4px 20px rgba(24,19,17,.08);
+}
+
+.prod-card__img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.prod-card__img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+}
+.prod-card:hover .prod-card__img img { transform: scale(1.05); }
+
+.prod-card__body {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prod-card__info { flex: 1; min-width: 0; }
+
+.prod-card__name {
+  font-family: var(--f-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prod-card__name em { font-style: italic; }
+
+.prod-card__price {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.prod-card__controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(24,19,17,.2);
+  background: transparent;
+  color: var(--ink);
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s, color .2s;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+.qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.qty-display {
+  font-family: var(--f-display);
+  font-size: 16px;
+  min-width: 18px;
+  text-align: center;
+  color: var(--ink);
+}
+
+.prod-card__unit {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 20px;
+}
+
+/* ── CHECKOUT FORM ─────────────────────────────────── */
+.checkout-section {
+  border-top: 1px solid var(--hair);
+  padding-top: 32px;
+  margin-bottom: 32px;
+}
+
+.checkout-section h3 {
+  font-family: var(--f-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.field { margin-bottom: 16px; }
+
+.field label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+
+.field input, .field textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid rgba(24,19,17,.18);
+  border-radius: 0;
+  padding: 12px 14px;
+  font-family: var(--f-body);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color .2s;
+  -webkit-appearance: none;
+}
+.field input:focus, .field textarea:focus { border-color: var(--accent); }
+.field textarea { resize: vertical; min-height: 76px; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(24,19,17,.32); }
+
+/* ── MPESA BOX ─────────────────────────────────────── */
+.mpesa-box {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+}
+
+.mpesa-box__label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.mpesa-box__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.mpesa-box__key { font-size: 12px; color: var(--muted); }
+
+.mpesa-box__val {
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.mpesa-box__amount {
+  font-size: 44px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.mpesa-box__note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+  line-height: 1.6;
+  border-top: 1px solid var(--hair);
+  padding-top: 12px;
+}
+
+/* ── SUBMIT ────────────────────────────────────────── */
+.order-submit {
+  display: block;
+  width: 100%;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 17px 24px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(24,19,17,.15);
+  transition: background .25s, transform .2s, box-shadow .2s;
+}
+.order-submit:hover:not(:disabled) { background: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(24,19,17,.2); }
+.order-submit:active:not(:disabled) { transform: translateY(0); }
+.order-submit:disabled { opacity: .35; cursor: not-allowed; }
+
+.order-hint {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ── STATUS MESSAGE ────────────────────────────────── */
+.order-status {
+  display: none;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  border: 1px solid;
+}
+.order-status--success {
+  border-color: #3a6b3a;
+  background: #f0f7f0;
+  color: #2a4f2a;
+}
+.order-status--warn {
+  border-color: rgba(139,88,38,.4);
+  background: var(--paper);
+  color: var(--ink-2);
+}
+.order-status--error {
+  border-color: #8b2626;
+  background: #fdf0f0;
+  color: #8b2626;
+}
+
+/* ── MOBILE ────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .order-layout { grid-template-columns: 1fr; }
+  .cart-panel { position: static; order: -1; }
+  .prod-grid { grid-template-columns: 1fr; }
+}
+
+/* ── PRODUCT CATEGORIES ───────────────────────────── */
+.prod-category { margin-bottom: 20px; }
+.prod-category + .prod-category { margin-top: 4px; }
+.prod-category__hd {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 9px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+}
+.prod-category__name {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+.prod-category__count {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── DELIVERY BANNER ─────────────────────────────── */
+.delivery-banner {
+  border-left: 3px solid var(--accent);
+  background: var(--paper);
+  padding: 12px 18px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+.delivery-banner strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+/* ── OUT OF STOCK ─────────────────────────────────── */
+.out-of-stock-note {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--accent);
+  padding-top: 8px;
+}
+
+/* ── STEP GHOST NUMBERS ──────────────────────────── */
+.step-ghost {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 52px;
+  line-height: 0.75;
+  color: var(--accent);
+  opacity: 0.15;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-right: 2px;
+}
+.checkout-section h3 { display: flex; align-items: baseline; gap: 8px; }
+
+</style>
+</head>
+<body data-screen-label="05 Order">
+
+  <div id="nav-mount"></div>
+
+  <header class="page-hero">
+    <div class="page-hero__eyebrow eyebrow">Order</div>
+    <h1 class="h-xl">
+      Build your<br/>
+      <em>order.</em>
+    </h1>
+    <p class="page-hero__sub">
+      Select products, fill in your details, pay via M-Pesa, then send. We confirm by return WhatsApp.
+    </p>
+  </header>
+
+  <div class="order-layout">
+
+    <!-- LEFT: Products + Checkout -->
+    <div class="order-main">
+
+      <!-- PRODUCTS -->
+      <div class="products-section">
+        <div class="delivery-banner">
+          <strong>Orders Mon–Sat · Same-day lunchtime delivery for in-stock items</strong>
+          Handmade in small batches — some products may not be available every week. We only fulfil your order once M-Pesa payment is confirmed.
+        </div>
+        <span class="section-label">1 · Choose your products</span>
+
+        <!-- Sausages -->
+        <div class="prod-category">
+          <div class="prod-category__hd">
+            <span class="prod-category__name">Sausages</span>
+            <span class="prod-category__count">4 varieties</span>
+          </div>
+          <div class="prod-grid">
+
+            <div class="prod-card" data-product="Chilli Cheese" data-price="1750" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/smoker-rack.jpg" alt="Chilli Cheese" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">Chilli <em>Cheese</em></p>
+                  <span class="prod-card__price">KSh 1,750 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="Käse Krainer" data-price="1700" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/sausages-bowl.jpg" alt="Käse Krainer" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name"><em>Käse</em> Krainer</p>
+                  <span class="prod-card__price">KSh 1,700 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="4x4 Frank" data-price="1500" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/pork-roast.jpg" alt="4x4 Frank" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">4&times;4 <em>Frank</em></p>
+                  <span class="prod-card__price">KSh 1,500 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="Chilli Banger" data-price="1550" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/philipp-herbs.jpg" alt="Chilli Banger" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">Chilli <em>Banger</em></p>
+                  <span class="prod-card__price">KSh 1,550 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Cured & Fermented -->
+        <div class="prod-category">
+          <div class="prod-category__hd">
+            <span class="prod-category__name">Cured &amp; Fermented</span>
+            <span class="prod-category__count">2 varieties</span>
+          </div>
+          <div class="prod-grid">
+
+            <div class="prod-card" data-product="Sauerkraut" data-price="500" data-unit="jar">
+              <div class="prod-card__img">
+                <img src="uploads/IMG_0813.jpg" alt="Sauerkraut" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name"><em>Sauerkraut</em></p>
+                  <span class="prod-card__price">KSh 500 / jar</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">jars</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="Biltong" data-price="275" data-unit="100g">
+              <div class="prod-card__img">
+                <img src="uploads/IMG_0887.jpg" alt="Biltong" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">Air-dried <em>Biltong</em></p>
+                  <span class="prod-card__price">KSh 275 / 100g</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">100g</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Leberkäse -->
+        <div class="prod-category">
+          <div class="prod-category__hd">
+            <span class="prod-category__name">Leberkäse</span>
+            <span class="prod-category__count">3 varieties</span>
+          </div>
+          <div class="prod-grid">
+
+            <div class="prod-card" data-product="Classic Leberkäse" data-price="1500" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/pork-roast.jpg" alt="Classic Leberkäse" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">Classic <em>Leberkäse</em></p>
+                  <span class="prod-card__price">KSh 1,500 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="Chilli Leberkäse" data-price="1550" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/smoker-rack.jpg" alt="Chilli Leberkäse" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name">Chilli <em>Leberkäse</em></p>
+                  <span class="prod-card__price">KSh 1,550 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prod-card" data-product="Käse-Leberkäse" data-price="1700" data-unit="kg">
+              <div class="prod-card__img">
+                <img src="assets/sausages-bowl.jpg" alt="Käse-Leberkäse" />
+              </div>
+              <div class="prod-card__body">
+                <div class="prod-card__info">
+                  <p class="prod-card__name"><em>Käse</em>-Leberkäse</p>
+                  <span class="prod-card__price">KSh 1,700 / kg</span>
+                </div>
+                <div class="prod-card__controls">
+                  <button class="qty-btn qty-minus">&#8722;</button>
+                  <span class="qty-display">0</span>
+                  <button class="qty-btn qty-plus">&#43;</button>
+                  <span class="prod-card__unit">kg</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CONTACT DETAILS -->
+      <div class="checkout-section">
+        <h3><span class="step-ghost">02</span> Your details</h3>
+        <div class="field">
+          <label for="of-name">Name</label>
+          <input type="text" id="of-name" placeholder="Your name" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="of-phone">WhatsApp number</label>
+          <input type="tel" id="of-phone" placeholder="+254 7XX XXX XXX" autocomplete="tel" />
+        </div>
+        <div class="field">
+          <label for="of-address">Delivery address in Nairobi</label>
+          <textarea id="of-address" placeholder="Street, estate, or area"></textarea>
+        </div>
+        <div class="field">
+          <label for="of-notes">Notes (optional)</label>
+          <textarea id="of-notes" placeholder="Preferred delivery time, gate code, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- MPESA -->
+      <div class="checkout-section">
+        <h3><span class="step-ghost">03</span> Pay via M-Pesa</h3>
+        <div class="mpesa-box">
+          <span class="mpesa-box__label">Send payment to</span>
+          <div class="mpesa-box__row">
+            <span class="mpesa-box__key">M-Pesa number</span>
+            <span class="mpesa-box__val">+254 700 000 000</span>
+          </div>
+          <div class="mpesa-box__row">
+            <span class="mpesa-box__key">Name</span>
+            <span class="mpesa-box__val">Philipp Achammer</span>
+          </div>
+          <div class="mpesa-box__row">
+            <span class="mpesa-box__key">Amount</span>
+            <span class="mpesa-box__val mpesa-box__amount" id="mpesa-amount">KSh 0</span>
+          </div>
+          <p class="mpesa-box__note">
+            M-Pesa &rarr; Send Money &rarr; enter the number above &rarr; enter the amount shown &rarr; use your name as reference. Then paste your confirmation code below.
+          </p>
+        </div>
+        <div class="field">
+          <label for="of-mpesa">M-Pesa confirmation code</label>
+          <input type="text" id="of-mpesa" placeholder="e.g. QHJ9XXXXXX" autocomplete="off" style="text-transform:uppercase;letter-spacing:0.08em" />
+        </div>
+      </div>
+
+      <!-- STATUS + SUBMIT -->
+      <div class="order-status" id="order-status"></div>
+      <button class="order-submit" id="order-submit" disabled>Send order via WhatsApp</button>
+      <p class="order-hint">
+        Opens WhatsApp with your order pre-filled including your M-Pesa code.<br/>
+        We confirm every order by return message.
+      </p>
+
+    </div>
+
+    <!-- RIGHT: Sticky Cart -->
+    <div class="cart-panel">
+      <div class="cart-panel__inner">
+        <div class="cart-panel__head">
+          <span class="cart-panel__title">Your cart</span>
+          <span class="cart-count-badge" id="cart-badge">0</span>
+        </div>
+        <div class="cart-items" id="cart-items">
+          <div class="cart-empty">Nothing added yet.</div>
+        </div>
+        <div class="cart-panel__total">
+          <span class="cart-panel__total-label">Total</span>
+          <span class="cart-panel__total-amount" id="cart-total">KSh 0</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <img src="assets/kedong-ridge.png" alt="" class="cta-band__ridge" />
+    <div class="cta-band__inner">
+      <div class="eyebrow cta-band__eyebrow center">Made in Kedong, delivered in 2-5 days</div>
+      <h2 class="h-lg">Questions before<br/>you order?</h2>
+      <div class="cta-band__ctas">
+        <a class="btn btn-fill-light btn-lg" href="https://wa.me/254719222299" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        <a class="btn btn-light btn-lg" href="range.html">See the range</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="foot-mount"></div>
+  <script src="chrome.js"></script>
+  <script src="enhancements.js"></script>
+
+  <script>
+  // Load product stock status and mark out-of-stock cards
+  (function () {
+    var CONVEX_URL = 'https://prestigious-goldfish-965.convex.cloud';
+    fetch(CONVEX_URL + '/api/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: 'products:listAll', args: {}, format: 'json' }),
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.status !== 'success') return;
+        (data.value || []).forEach(function (p) {
+          if (!p.inStock) {
+            var card = document.querySelector('[data-product="' + p.name + '"]');
+            if (!card) return;
+            var note = document.createElement('p');
+            note.className = 'out-of-stock-note';
+            note.textContent = 'Not available for same-day delivery';
+            card.appendChild(note);
+          }
+        });
+      })
+      .catch(function () {});
+  })();
+  </script>
+
+  <script>
+  (function () {
+    const CONVEX_URL   = "https://prestigious-goldfish-965.convex.cloud";
+    const cards        = document.querySelectorAll('.prod-card');
+    const cartItemsEl  = document.getElementById('cart-items');
+    const cartTotalEl  = document.getElementById('cart-total');
+    const cartBadgeEl  = document.getElementById('cart-badge');
+    const mpesaAmtEl   = document.getElementById('mpesa-amount');
+    const submitBtn    = document.getElementById('order-submit');
+    const statusEl     = document.getElementById('order-status');
+
+    // Idempotency key — one UUID per page session
+    const submissionId = sessionStorage.getItem('rt-sid') || (() => {
+      const id = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+      sessionStorage.setItem('rt-sid', id);
+      return id;
+    })();
+
+    // qty state
+    const qtys = {};
+    cards.forEach(c => { qtys[c.dataset.product] = 0; });
+
+    function getTotal() {
+      let t = 0;
+      cards.forEach(c => { t += qtys[c.dataset.product] * +c.dataset.price; });
+      return t;
+    }
+
+    function renderCart() {
+      const total = getTotal();
+      const totalItems = Object.values(qtys).reduce((a, b) => a + b, 0);
+      cartTotalEl.textContent = 'KSh ' + total.toLocaleString();
+      cartBadgeEl.textContent = totalItems;
+      mpesaAmtEl.textContent  = 'KSh ' + total.toLocaleString();
+
+      const lines = [];
+      cards.forEach(c => {
+        const q = qtys[c.dataset.product];
+        if (q > 0) lines.push({ name: c.dataset.product, qty: q, unit: c.dataset.unit, price: +c.dataset.price });
+      });
+
+      if (!lines.length) {
+        cartItemsEl.innerHTML = '<div class="cart-empty">Nothing added yet.</div>';
+        submitBtn.disabled = true;
+        return;
+      }
+
+      submitBtn.disabled = false;
+      cartItemsEl.innerHTML = lines.map(l =>
+        '<div class="cart-item">' +
+          '<span class="cart-item__name">' + l.name + '</span>' +
+          '<span class="cart-item__qty">' + l.qty + l.unit + '</span>' +
+          '<span class="cart-item__price">KSh ' + (l.price * l.qty).toLocaleString() + '</span>' +
+          '<button class="cart-item__remove" data-remove="' + l.name + '">&times;</button>' +
+        '</div>'
+      ).join('');
+
+      cartItemsEl.querySelectorAll('.cart-item__remove').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var n = btn.dataset.remove;
+          qtys[n] = 0;
+          cards.forEach(function(c) {
+            if (c.dataset.product === n) c.querySelector('.qty-display').textContent = '0';
+          });
+          renderCart();
+        });
+      });
+    }
+
+    // Wire up +/- buttons on every product card
+    cards.forEach(function(card) {
+      var name = card.dataset.product;
+      card.querySelector('.qty-plus').addEventListener('click', function() {
+        qtys[name]++;
+        card.querySelector('.qty-display').textContent = qtys[name];
+        renderCart();
+      });
+      card.querySelector('.qty-minus').addEventListener('click', function() {
+        if (qtys[name] > 0) {
+          qtys[name]--;
+          card.querySelector('.qty-display').textContent = qtys[name];
+          renderCart();
+        }
+      });
+    });
+
+    function showStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = 'order-status order-status--' + type;
+      statusEl.style.display = 'block';
+    }
+
+    submitBtn.addEventListener('click', async function() {
+      var fname    = document.getElementById('of-name').value.trim();
+      var fphone   = document.getElementById('of-phone').value.trim();
+      var faddress = document.getElementById('of-address').value.trim();
+      var fnotes   = document.getElementById('of-notes').value.trim();
+      var fmpesa   = document.getElementById('of-mpesa').value.trim().toUpperCase();
+
+      if (!fname || !fphone || !faddress) {
+        showStatus('Please fill in your name, WhatsApp number, and delivery address.', 'error');
+        return;
+      }
+
+      var items = [];
+      cards.forEach(function(c) {
+        var q = qtys[c.dataset.product];
+        if (q > 0) items.push({
+          product: c.dataset.product,
+          qty: q,
+          unit: c.dataset.unit,
+          pricePerUnit: +c.dataset.price,
+          lineTotal: q * +c.dataset.price,
+        });
+      });
+
+      if (!items.length) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving order...';
+
+      var orderNumber = '';
+
+      // Save to Convex
+      showStatus('Saving your order...', 'warn');
+      try {
+        var args = {
+          submissionId: submissionId,
+          customerName: fname,
+          customerPhone: fphone,
+          deliveryAddress: faddress,
+          items: items,
+          total: getTotal(),
+        };
+        if (fnotes)  args.notes     = fnotes;
+        if (fmpesa)  args.mpesaCode = fmpesa;
+
+        var res = await fetch(CONVEX_URL + '/api/mutation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: 'orders:submitOrder', args: args, format: 'json' })
+        });
+
+        if (!res.ok) {
+          throw new Error('HTTP ' + res.status + ': ' + await res.text());
+        }
+
+        var data = await res.json();
+
+        if (data.status === 'success' && data.value) {
+          orderNumber = data.value.orderNumber;
+          if (data.value.isDuplicate) {
+            showStatus('Order ' + orderNumber + ' already exists. Opening WhatsApp.', 'warn');
+          } else if (data.value.existingOrderThisWeek) {
+            showStatus('Order ' + orderNumber + ' saved. You also have ' + data.value.existingOrderThisWeek + ' pending delivery.', 'warn');
+          } else {
+            showStatus('Order ' + orderNumber + ' saved. Opening WhatsApp now...', 'success');
+          }
+        } else {
+          throw new Error(JSON.stringify(data));
+        }
+      } catch (err) {
+        console.error('Convex error:', err);
+        showStatus('Could not reach database (' + err.message + '). Opening WhatsApp anyway.', 'error');
+      }
+
+      // Build WhatsApp message
+      var total   = getTotal();
+      var lineStr = items.map(function(i) { return '  ' + i.qty + ' ' + i.unit + ' ' + i.product; }).join('\n');
+      var msg = 'Hi, I\'d like to place an order with Red Thorn Farm.';
+      if (orderNumber) msg += '\n\nRef: ' + orderNumber;
+      msg += '\n\nName: ' + fname + '\nWhatsApp: ' + fphone;
+      msg += '\n\nOrder:\n' + lineStr;
+      msg += '\n\nTotal: KSh ' + total.toLocaleString();
+      if (fmpesa)   msg += '\nM-Pesa ref: ' + fmpesa;
+      msg += '\n\nDelivery address: ' + faddress;
+      if (fnotes)   msg += '\nNotes: ' + fnotes;
+
+      submitBtn.textContent = 'Send order via WhatsApp';
+      submitBtn.disabled = false;
+
+      sessionStorage.removeItem('rt-sid');
+
+      window.open('https://wa.me/254719222299?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+    });
+  })();
+  </script>
+
+</body>
+</html>

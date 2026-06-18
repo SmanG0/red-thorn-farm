@@ -1,0 +1,253 @@
+/* ═══════════════════════════════════════════════════════════════
+   RED THORN FARM — ENHANCEMENTS.CSS
+   All improvements are purely additive. Nothing in this file
+   modifies existing component logic — only adds to it.
+
+   TO REVERT:
+     Remove <link rel="stylesheet" href="enhancements.css"> from
+     each HTML file, and delete this file and enhancements.js.
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. SCROLL PROGRESS BAR
+   Thin oxblood line at the very top. Width driven by JS.
+───────────────────────────────────────────────────────────────*/
+.rt-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 10000;
+  pointer-events: none;
+  transition: width 0.07s linear;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. HERO KEN BURNS
+   Existing CSS freezes the hero image at scale(1.04).
+   This animates it slowly, breathing life into the shot.
+───────────────────────────────────────────────────────────────*/
+.hero-full__bg img {
+  animation: rt-hero-zoom 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes rt-hero-zoom {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.11) translate(-1.2%, 0.6%); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. HERO TEXT STAGGER ENTRANCE
+   Gated on .rt-enhanced (added by JS) so without JS the text
+   is always fully visible — safe progressive enhancement.
+───────────────────────────────────────────────────────────────*/
+.rt-enhanced .hero-full__eyebrow {
+  opacity: 0;
+  animation: rt-fade-up 1s cubic-bezier(.16,1,.3,1) 0.25s forwards;
+}
+.rt-enhanced .hero-full__title .h-xl {
+  opacity: 0;
+  animation: rt-fade-up 1.1s cubic-bezier(.16,1,.3,1) 0.45s forwards;
+}
+.rt-enhanced .hero-full__cta {
+  opacity: 0;
+  animation: rt-fade-up 0.9s cubic-bezier(.16,1,.3,1) 0.72s forwards;
+}
+
+@keyframes rt-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Non-home page hero entrance (subtler) */
+.rt-enhanced .page-hero__eyebrow {
+  opacity: 0;
+  animation: rt-fade-up 0.8s cubic-bezier(.16,1,.3,1) 0.1s forwards;
+}
+.rt-enhanced .page-hero .h-xl {
+  opacity: 0;
+  animation: rt-fade-up 0.9s cubic-bezier(.16,1,.3,1) 0.25s forwards;
+}
+.rt-enhanced .page-hero__sub {
+  opacity: 0;
+  animation: rt-fade-up 0.8s cubic-bezier(.16,1,.3,1) 0.42s forwards;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   4. SCROLL REVEAL
+   JS adds .rt-reveal to key elements and observes them.
+   .rt-visible is added when the element enters the viewport.
+   Without JS: no .rt-reveal class added → elements always visible.
+───────────────────────────────────────────────────────────────*/
+.rt-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity  0.9s cubic-bezier(.16, 1, .3, 1),
+    transform 0.9s cubic-bezier(.16, 1, .3, 1);
+}
+.rt-reveal.rt-visible {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5. FEATURE SECTION — IMAGE HOVER ZOOM
+   The feature media images have no transition in styles.css.
+   This adds a slow zoom when hovering the whole feature block.
+───────────────────────────────────────────────────────────────*/
+.feature__media img {
+  transition: transform 1.8s cubic-bezier(.16, 1, .3, 1);
+}
+.feature:hover .feature__media img {
+  transform: scale(1.05);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6. LINK ARROW — ANIMATED INDICATOR
+   Adds a → that slides right on hover.
+   The existing .link-arrow has no arrow character.
+───────────────────────────────────────────────────────────────*/
+.link-arrow::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 6px;
+  opacity: 0.6;
+  transition: transform 0.35s cubic-bezier(.2, .7, .2, 1),
+              opacity  0.35s ease;
+}
+.link-arrow:hover::after {
+  transform: translateX(6px);
+  opacity: 1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7. PILLAR CELLS — ACCENT RULE
+   A thin oxblood rule before each pillar anchors it visually.
+───────────────────────────────────────────────────────────────*/
+.pillars__cell::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 18px;
+  opacity: 0.55;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   8. INTRO SIGN — SEPARATOR RULE
+   A thin line above the founder sign-off marks the end of the
+   section cleanly and with intention.
+───────────────────────────────────────────────────────────────*/
+.intro__sign::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 16px;
+  opacity: 0.45;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   9. PEEK CARDS — STRONGER IMAGE HOVER
+   Existing hover is scale(1.05). This lifts it to 1.08 for
+   a more satisfying interaction.
+───────────────────────────────────────────────────────────────*/
+.peek__card:hover .peek__photo img {
+  transform: scale(1.08);
+}
+.peek__photo img {
+  transition: transform 0.9s cubic-bezier(.16, 1, .3, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   10. FEATURE IMAGE — EDGE VIGNETTE
+   Adds a subtle cinematic darkening at the edges of feature
+   images, separating them from the background.
+───────────────────────────────────────────────────────────────*/
+.feature__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    rgba(24, 19, 17, 0.15) 100%
+  );
+  z-index: 1;
+}
+.feature__media .tag {
+  z-index: 2; /* keep tag above vignette */
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   11. CTA BAND BUTTON — SUBTLE LIFT ON HOVER
+   The primary WhatsApp button gets a stronger lift.
+───────────────────────────────────────────────────────────────*/
+.cta-band .btn-fill-light {
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.cta-band .btn-fill-light:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+  transform: translateY(-2px);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   12. RANGE PRODUCT CARDS — SMOOTHER HOVER
+   The .pc cards use multiple box-shadows for the border
+   effect. This adds a lift on hover more gracefully.
+───────────────────────────────────────────────────────────────*/
+.pc {
+  transition: box-shadow 0.3s ease, transform 0.3s cubic-bezier(.16,1,.3,1);
+}
+.pc:hover {
+  transform: translateY(-3px);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   13. NAV LINKS — UNDERLINE SLIDE IN
+   Replaces the static colour-only hover with a sliding
+   underline that grows from left to right.
+───────────────────────────────────────────────────────────────*/
+.nav-links a:not(.is-current)::before {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  height: 1px;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.28s cubic-bezier(.2,.7,.2,1);
+}
+.nav-links a:not(.is-current):hover::before {
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   14. FOOTER RIDGE — PARALLAX HINT
+   Give the kedong-ridge a slightly warmer presence.
+───────────────────────────────────────────────────────────────*/
+.foot__ridge {
+  opacity: 0.22;
+  transition: opacity 0.4s ease;
+}
+.foot:hover .foot__ridge {
+  opacity: 0.32;
+}

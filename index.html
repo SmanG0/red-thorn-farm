@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Red Thorn Farm Slow-smoked, hand-tied sausages · Kenya</title>
+<meta name="description" content="Small-batch artisan sausages, smoked over acacia wood on a farm in Kedong, Kenya. No phosphates, no fillers, no shortcuts. Order Mon–Sat — same-day delivery." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="enhancements.css" />
+<script>window.RTPAGE = { id: 'home', heroOverlay: true };</script>
+<style>
+/* ── HERO SLIDESHOW ──────────────────────────────── */
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: 0;
+}
+.hero-slide.active { opacity: 1; }
+.hero-slide img { width: 100%; height: 100%; object-fit: cover; }
+.hero-full__bg { position: absolute; inset: 0; z-index: 0; }
+.hero-full__bg::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.18) 35%, rgba(0,0,0,.0) 55%, rgba(0,0,0,.55) 100%),
+    linear-gradient(90deg, rgba(0,0,0,.32) 0%, rgba(0,0,0,0) 60%);
+}
+
+/* ── FARMERS MARKET STRIP ────────────────────────── */
+.market-strip {
+  background: var(--ink);
+  color: var(--bg);
+  padding: clamp(32px,5vw,56px) var(--pad);
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.market-strip__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr repeat(3, auto);
+  align-items: center;
+  gap: clamp(20px,3vw,48px);
+}
+.market-strip__heading {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(18px,2vw,24px);
+  color: var(--gold);
+  white-space: nowrap;
+}
+.market-strip__rule {
+  height: 1px;
+  background: rgba(255,255,255,.1);
+}
+.market-strip__item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.market-strip__label {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250,248,245,.45);
+}
+.market-strip__val {
+  font-size: 14px;
+  color: var(--bg);
+  font-weight: 400;
+}
+.market-strip__val strong {
+  font-weight: 500;
+  color: var(--gold);
+}
+@media (max-width: 860px) {
+  .market-strip__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+  .market-strip__rule { display: none; }
+  .market-strip__heading { grid-column: span 2; }
+}
+@media (max-width: 520px) {
+  .market-strip__inner { grid-template-columns: 1fr; }
+  .market-strip__heading { grid-column: span 1; }
+}
+
+/* ── UPCOMING BATCHES ────────────────────────────── */
+.batches-section {
+  padding: var(--pad-y) var(--pad);
+  background: var(--bg-2);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.batches-section__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.batches-section .eyebrow { margin-bottom: 18px; }
+.batches-section .h-lg { margin-bottom: 32px; }
+/* Calendar nav */
+.cal-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.cal-nav-btn {
+  background: none;
+  border: 1px solid var(--hair);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-family: var(--f-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cal-nav-btn:hover { border-color: var(--ink); }
+.cal-month-label {
+  font-family: var(--f-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+}
+/* Calendar grid */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.cal-day-hdr {
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 0 12px;
+}
+.cal-cell {
+  min-height: 80px;
+  border: 1px solid var(--hair);
+  padding: 8px 10px;
+  background: var(--paper);
+  vertical-align: top;
+}
+.cal-cell--empty {
+  background: transparent;
+  border-color: transparent;
+  min-height: 0;
+}
+.cal-cell--past { opacity: 0.38; }
+.cal-cell--today { border-color: var(--accent); }
+.cal-cell--batch {
+  background: var(--bg);
+  border-color: var(--accent);
+  border-width: 2px;
+}
+.cal-cell__num {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.cal-cell--today .cal-cell__num {
+  color: var(--accent);
+  font-weight: 700;
+}
+.cal-cell__products {
+  font-size: 10px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.cal-cell__note {
+  font-size: 9px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+@media (max-width: 600px) {
+  .cal-cell { min-height: 52px; padding: 5px 6px; }
+  .cal-cell__products { font-size: 9px; }
+  .cal-cell__note { display: none; }
+}
+
+</style>
+</head>
+<body data-screen-label="01 Home">
+
+  <div id="nav-mount"></div>
+
+  <!-- ═════════ HERO ═════════ -->
+  <section class="hero-full" data-screen-label="Hero">
+    <div class="hero-full__bg">
+      <div class="hero-slide active">
+        <img src="uploads/iSiweddings_MB-248.jpg" alt="Philipp tending meat over an open fire at Red Thorn Farm" />
+      </div>
+      <div class="hero-slide">
+        <img src="uploads/smoker-fire-night.jpg" alt="The Red Thorn smoker burning through the night" />
+      </div>
+      <div class="hero-slide">
+        <img src="uploads/philipp-pig-spit.jpg" alt="Whole animal on the spit at Red Thorn Farm" />
+      </div>
+    </div>
+    <img src="assets/mountains.png" alt="" class="hero-full__mountains" aria-hidden="true" />
+    <div class="hero-full__content">
+      <div class="hero-full__title">
+        <div class="eyebrow hero-full__eyebrow">Kedong · Kenya · Est. 2024</div>
+        <h1 class="h-xl">
+          Made fresh.<br/>
+          <em>Ready today.</em>
+        </h1>
+        <p class="hero-full__sub">
+          Orders Mon–Sat &middot; Same-day lunchtime delivery &middot; Handmade in small batches — sometimes things run out
+        </p>
+        <div class="hero-full__cta">
+          <a href="order.html" class="btn btn-hero-primary">Order now &rarr;</a>
+          <a href="range.html" class="btn btn-hero-ghost">See the range</a>
+        </div>
+      </div>
+    </div>
+    <span class="hero-cue">Scroll</span>
+  </section>
+
+  <!-- ═════════ INTRO ═════════ -->
+  <section class="intro" data-screen-label="Intro">
+    <div class="intro__lede">
+      <div class="eyebrow">A note from the founder</div>
+      <p class="lede" style="margin-top:18px">
+        I started Red Thorn because I saw a lack of quality in this country —
+        true, undying quality. The kind you find in the spek of the Austrian Alps,
+        the charcuterie of France, the biltong of the Karoo.
+      </p>
+    </div>
+    <div class="intro__body">
+      <p>
+        I want to bring that quality to Kenya — generational quality, not a trend.
+        Something that earns its place on a table because it was made with real
+        skill, from real ingredients, with no shortcuts hidden in the middle.
+      </p>
+      <p>
+        We started with a hand-built smoker, a butcher's block, and a piece of land
+        where the acacia breaks up the bush. Everything we make is rooted here.
+        Our classics honour where the craft came from. Our new products show
+        what Kenya can become. We will not compromise on either.
+      </p>
+      <div class="intro__sign">  Philipp Achammer, founder</div>
+    </div>
+  </section>
+
+  <!-- ═════════ PILLARS ═════════ -->
+  <section class="pillars" data-screen-label="Pillars">
+    <div class="pillars__grid">
+      <div class="pillars__cell">
+        <span class="pillars__n">i.</span>
+        <h3>Sourced</h3>
+        <p>Whole cuts from farms in the Rift Valley and the Kedong plains. Pork from pasture, beef on grass, lamb on bush. No trim, no fillers, never a mystery bag.</p>
+      </div>
+      <div class="pillars__cell">
+        <span class="pillars__n">ii.</span>
+        <h3>Smoked</h3>
+        <p>Hung over an acacia-wood fire we light by hand. The wood is local, the smoke is honest, the colour is the meat's own.</p>
+      </div>
+      <div class="pillars__cell">
+        <span class="pillars__n">iii.</span>
+        <h3>Sliced</h3>
+        <p>Cased in natural skins, tied off by hand, hung overnight, vacuum-sealed the following day. Order Mon–Sat — same-day lunchtime delivery across Nairobi if it's in stock. Every link is a little different, the way it should be.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ FEATURE TRAINED ═════════ -->
+  <section class="feature" data-screen-label="Feature: trained">
+    <div class="feature__media">
+      <img src="uploads/philipp-carcass-fire.png" alt="Philipp handling a whole animal over open fire at De Vuurplaats, Netherlands" style="object-position: center 30%;" />
+      <span class="tag">Where it started De Vuurplaats, NL</span>
+    </div>
+    <div class="feature__text">
+      <div class="eyebrow">Trained by fire</div>
+      <h2 class="h-lg">A Dutch farmyard,<br/>an open fire, and<br/>a lot of <em>patience.</em></h2>
+      <div class="prose">
+        <p class="no-cap">Philipp trained at De Vuurplaats — a fire-cooking kitchen on a Brabant farm where everything, without exception, is cooked over open coals. Whole animals. Bunches of fresh herbs slapped directly onto the meat. A philosophy that has exactly one rule: wait a little longer.</p>
+        <p>He brought that discipline to Kenya. Source whole animals. Season simply. Let the smoke do the work. Never dress up what is already good.</p>
+      </div>
+      <a href="about.html" class="link-arrow">Read the story</a>
+    </div>
+  </section>
+
+  <!-- ═════════ FEATURE PLACE ═════════ -->
+  <section class="feature feature--reverse" data-screen-label="Feature: place">
+    <div class="feature__media">
+      <img src="assets/savanna.jpg" alt="The Kenyan bush stretching south from the farm" />
+      <span class="tag">Looking south · The farm, Kedong</span>
+    </div>
+    <div class="feature__text">
+      <div class="eyebrow">Where it's made</div>
+      <h2 class="h-lg">On the edge<br/>of the bush, at<br/>the foot of the <em>ridge.</em></h2>
+      <div class="prose">
+        <p class="no-cap">The farm sits where the cultivated land gives up and the acacia takes over — far enough from the road that the only neighbours are red-thorn trees, dik-dik, and the occasional zebra drifting through at dusk.</p>
+        <p>The acacia we smoke with is the same tree we named ourselves after. The meat comes from farms in the Rift Valley we know by name. Nothing here is anonymous.</p>
+      </div>
+      <a href="craft.html" class="link-arrow">See the craft</a>
+    </div>
+  </section>
+
+  <!-- ═════════ RANGE PEEK ═════════ -->
+  <section class="peek" data-screen-label="Range peek">
+    <header class="peek__head">
+      <div>
+        <div class="eyebrow">On the table this week</div>
+        <h2 class="h-lg">The range.<br/>Every one of them <em>honest.</em></h2>
+      </div>
+      <a href="range.html" class="link-arrow">See the full range</a>
+    </header>
+    <div class="peek__grid">
+      <a class="peek__card" href="range.html#chilli-kase">
+        <div class="peek__photo">
+          <span class="peek__num">i.</span>
+          <img src="uploads/524d5992-8787-44ab-a9b3-bff1044a9380.jpg" alt="Sausages hanging on the smoker rack at Red Thorn Farm" />
+        </div>
+        <h3 class="peek__title">Chilli <em>Cheese</em></h3>
+        <span class="peek__meta">Cheese · Pilipili kichaa · KSh 1,750 /kg</span>
+      </a>
+      <a class="peek__card" href="range.html#kase-krainer">
+        <div class="peek__photo">
+          <span class="peek__num">ii.</span>
+          <img src="uploads/IMG_0887.jpg" alt="Fresh Red Thorn sausages just off the smoker" />
+        </div>
+        <h3 class="peek__title"><em>Käse</em> Krainer</h3>
+        <span class="peek__meta">Cheese sausage · Light smoke · KSh 1,700 /kg</span>
+      </a>
+      <a class="peek__card" href="range.html#frank">
+        <div class="peek__photo">
+          <span class="peek__num">iii.</span>
+          <img src="uploads/smoker-fire-night.jpg" alt="The acacia-wood smoker burning at night, Kedong" />
+        </div>
+        <h3 class="peek__title">4×4 <em>Frank</em></h3>
+        <span class="peek__meta">Frankfurter · Austrian style · KSh 1,500 /kg</span>
+      </a>
+      <a class="peek__card" href="range.html#banger">
+        <div class="peek__photo">
+          <span class="peek__num">iv.</span>
+          <img src="uploads/smoker-smoke-day.jpg" alt="Smoke rising from the Red Thorn smoker during the week's batch" />
+        </div>
+        <h3 class="peek__title">Chilli <em>Banger</em></h3>
+        <span class="peek__meta">Scotch bonnet · English style · KSh 1,550 /kg</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═════════ QUOTE ═════════ -->
+  <section class="quote" data-screen-label="Quote">
+    <div class="quote__inner">
+      <span class="quote__mark" aria-hidden="true">"</span>
+      <p class="quote__text">
+        These are the first sausages we've had in Nairobi
+        that taste like someone actually cared about what was in them.
+      </p>
+      <div class="quote__cite">
+        <b>A customer in Nairobi</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ FARMERS MARKET ═════════ -->
+  <section class="market-strip" data-screen-label="Farmers Market">
+    <div class="market-strip__inner">
+      <div class="market-strip__heading">Find us in person</div>
+      <div class="market-strip__rule"></div>
+      <div class="market-strip__item">
+        <span class="market-strip__label">Where</span>
+        <span class="market-strip__val"><strong>Giraffe Lane</strong><br/>Kimuka</span>
+      </div>
+      <div class="market-strip__item">
+        <span class="market-strip__label">When</span>
+        <span class="market-strip__val">Saturday &amp; Sunday</span>
+      </div>
+      <div class="market-strip__item">
+        <span class="market-strip__label">Payment</span>
+        <span class="market-strip__val">M-Pesa only &middot; No cash</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ UPCOMING BATCHES ═════════ -->
+  <section class="batches-section" data-screen-label="Upcoming batches" style="display:none">
+    <div class="batches-section__inner">
+      <div class="eyebrow">Production schedule</div>
+      <h2 class="h-lg">Upcoming<br/>fresh <em>batches.</em></h2>
+      <div class="cal-nav-row">
+        <button class="cal-nav-btn" id="cal-prev">&#8592; Prev</button>
+        <div class="cal-month-label" id="cal-month-label"></div>
+        <button class="cal-nav-btn" id="cal-next">Next &#8594;</button>
+      </div>
+      <div id="cal-grid-wrap"></div>
+    </div>
+  </section>
+
+  <!-- ═════════ CTA BAND ═════════ -->
+  <section class="cta-band" data-screen-label="CTA">
+    <img src="assets/kedong-ridge.png" alt="" class="cta-band__ridge" />
+    <div class="cta-band__inner">
+      <div class="eyebrow cta-band__eyebrow center">Fresh batch on the smoker</div>
+      <h2 class="h-lg">Closer to the farm<br/>than the shelf.</h2>
+      <p>
+        Order Mon–Sat and get same-day lunchtime delivery if it's in stock.
+        Handmade in small batches — we'll always tell you if something's run out.
+      </p>
+      <div class="cta-band__ctas">
+        <a class="btn btn-fill-light btn-lg" href="https://wa.me/254719222299" target="_blank" rel="noopener">WhatsApp · place an order</a>
+        <a class="btn btn-light btn-lg" href="range.html">See the range</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="foot-mount"></div>
+
+  <script src="chrome.js"></script>
+  <script src="enhancements.js"></script>
+  <script>
+  (function () {
+    // ── Hero slideshow (3 s interval) ─────────────────────────
+    var slides = document.querySelectorAll('.hero-slide');
+    if (slides.length > 1) {
+      var current = 0;
+      setInterval(function () {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3000);
+    }
+
+    // ── Upcoming batches calendar from Convex ────────────────
+    var CONVEX = 'https://prestigious-goldfish-965.convex.cloud';
+    var batchMap = {};
+    var calYear, calMonth;
+    var DAY_HDRS = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+    function esc(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function pad2(n) { return String(n).padStart(2,'0'); }
+
+    function renderCal(y, m) {
+      calYear = y; calMonth = m;
+      var label = new Date(y, m, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      document.getElementById('cal-month-label').textContent = label;
+      var now = new Date();
+      var todayStr = now.getFullYear() + '-' + pad2(now.getMonth()+1) + '-' + pad2(now.getDate());
+      var firstDow = new Date(y, m, 1).getDay(); // 0=Sun
+      var startOffset = (firstDow + 6) % 7;      // Mon-based: Mon=0 … Sun=6
+      var daysInMonth = new Date(y, m + 1, 0).getDate();
+      var html = '<div class="cal-grid">';
+      DAY_HDRS.forEach(function(h) { html += '<div class="cal-day-hdr">' + h + '</div>'; });
+      for (var i = 0; i < startOffset; i++) html += '<div class="cal-cell cal-cell--empty"></div>';
+      for (var d = 1; d <= daysInMonth; d++) {
+        var dateStr = y + '-' + pad2(m+1) + '-' + pad2(d);
+        var batch = batchMap[dateStr];
+        var cls = 'cal-cell';
+        if (dateStr < todayStr) cls += ' cal-cell--past';
+        else if (dateStr === todayStr) cls += ' cal-cell--today';
+        if (batch) cls += ' cal-cell--batch';
+        html += '<div class="' + cls + '">';
+        html += '<div class="cal-cell__num">' + d + '</div>';
+        if (batch) {
+          var prods = (batch.productNames || []).map(function(p) { return esc(p); }).join('<br>');
+          html += '<div class="cal-cell__products">' + (prods || '&mdash;') + '</div>';
+          if (batch.publicNote) html += '<div class="cal-cell__note">' + esc(batch.publicNote) + '</div>';
+        }
+        html += '</div>';
+      }
+      html += '</div>';
+      document.getElementById('cal-grid-wrap').innerHTML = html;
+    }
+
+    fetch(CONVEX + '/api/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: 'batches:listUpcoming', args: {}, format: 'json' }),
+    })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status !== 'success' || !data.value || !data.value.length) {
+          var section = document.querySelector('.batches-section');
+          if (section) section.style.display = 'none';
+          return;
+        }
+        data.value.forEach(function(b) { batchMap[b.batchDate] = b; });
+        var section = document.querySelector('.batches-section');
+        if (section) section.style.display = '';
+        var now = new Date();
+        renderCal(now.getFullYear(), now.getMonth());
+        document.getElementById('cal-prev').addEventListener('click', function() {
+          calMonth--;
+          if (calMonth < 0) { calMonth = 11; calYear--; }
+          renderCal(calYear, calMonth);
+        });
+        document.getElementById('cal-next').addEventListener('click', function() {
+          calMonth++;
+          if (calMonth > 11) { calMonth = 0; calYear++; }
+          renderCal(calYear, calMonth);
+        });
+      })
+      .catch(function() {
+        var section = document.querySelector('.batches-section');
+        if (section) section.style.display = 'none';
+      });
+  })();
+  </script>
+
+  <!-- ═════════ TWEAKS ═════════ -->
+  <div id="tweaks-root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>

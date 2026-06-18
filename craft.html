@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>The Craft Red Thorn Farm</title>
+<meta name="description" content="How a Red Thorn sausage is made. From the block to the smoker, by hand, every week." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="enhancements.css" />
+<script>window.RTPAGE = { id: 'craft', heroOverlay: false };</script>
+<style>
+
+/* ══ ALTERNATING TIMELINE ══════════════════════════════
+
+   Spine runs down the centre. Steps alternate left/right.
+   Arrows: ↓ → ↓ ← ↓ → (connectors between steps)
+
+═══════════════════════════════════════════════════════ */
+
+.timeline-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px) clamp(80px, 10vw, 140px);
+  position: relative;
+}
+
+/* vertical spine */
+.timeline-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: var(--hair);
+}
+
+/* ── single step ── */
+.tstep {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: start;
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* image side */
+.tstep__img {
+  overflow: hidden;
+  position: relative;
+}
+.tstep__img img {
+  width: 100%;
+  height: clamp(260px, 36vh, 420px);
+  object-fit: cover;
+  display: block;
+  transition: transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.tstep__img:hover img { transform: scale(1.04); }
+
+/* text side */
+.tstep__body {
+  padding: clamp(28px, 4vw, 52px) clamp(24px, 3.5vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(260px, 36vh, 420px);
+}
+
+.tstep__day {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.tstep__title {
+  font-family: var(--f-display);
+  font-size: clamp(24px, 2.8vw, 38px);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0 0 18px;
+  color: var(--ink);
+}
+.tstep__title em { font-style: italic; }
+
+.tstep__desc {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 38ch;
+}
+
+/* ── spine centre column ── */
+.tstep__spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: clamp(28px, 4vw, 52px);
+  position: relative;
+  height: 100%;
+}
+
+/* numbered circle on the spine */
+.tstep__node {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 6px var(--bg);
+}
+
+/* arrow connector below node */
+.tstep__arrow {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+  color: var(--hair-2);
+  font-size: 18px;
+  line-height: 1;
+  gap: 2px;
+}
+.tstep__arrow svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(24,19,17,.2);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── ODD steps: image LEFT, text RIGHT ── */
+.tstep--left .tstep__img  { grid-column: 1; grid-row: 1; }
+.tstep--left .tstep__spine { grid-column: 2; grid-row: 1; }
+.tstep--left .tstep__body { grid-column: 3; grid-row: 1; }
+.tstep--left .tstep__body { padding-left: clamp(32px, 4vw, 64px); }
+
+/* ── EVEN steps: text LEFT, image RIGHT ── */
+.tstep--right .tstep__body { grid-column: 1; grid-row: 1; text-align: right; }
+.tstep--right .tstep__body .tstep__desc { margin-left: auto; }
+.tstep--right .tstep__spine { grid-column: 2; grid-row: 1; }
+.tstep--right .tstep__img  { grid-column: 3; grid-row: 1; }
+.tstep--right .tstep__body { padding-right: clamp(32px, 4vw, 64px); }
+
+/* last step no connector arrow */
+.tstep:last-child .tstep__arrow { display: none; }
+
+/* ── pull quote ── */
+.craft-quote {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 96px) clamp(20px, 5vw, 72px);
+  text-align: center;
+  border-top: 1px solid var(--hair);
+}
+.craft-quote blockquote {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(22px, 3vw, 40px);
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--accent);
+  max-width: 28ch;
+  margin: 0 auto 20px;
+}
+.craft-quote cite {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+}
+
+/* ── mobile: stack everything ── */
+@media (max-width: 720px) {
+  .timeline-wrap::before { left: 20px; transform: none; }
+  .tstep { grid-template-columns: 40px 1fr; grid-template-rows: auto auto; }
+  .tstep--left .tstep__img,
+  .tstep--right .tstep__img  { grid-column: 1 / -1; grid-row: 2; }
+  .tstep--left .tstep__body,
+  .tstep--right .tstep__body { grid-column: 2; grid-row: 1; text-align: left; padding: 0 0 20px 20px; min-height: 0; }
+  .tstep--right .tstep__body .tstep__desc { margin-left: 0; }
+  .tstep--left .tstep__spine,
+  .tstep--right .tstep__spine { grid-column: 1; grid-row: 1; padding-top: 0; }
+  .tstep__img img { height: 220px; }
+}
+</style>
+</head>
+<body data-screen-label="04 Craft">
+
+  <div id="nav-mount"></div>
+
+  <header class="page-hero">
+    <div class="page-hero__eyebrow eyebrow">The craft</div>
+    <h1 class="h-xl">
+      Made by hand.<br/>
+      Every <em>week.</em>
+    </h1>
+    <p class="page-hero__sub">
+      A Red Thorn sausage takes three days. Here is what happens on each of them.
+    </p>
+  </header>
+
+  <div class="timeline-wrap">
+
+    <!-- ── 1. Butchery — image LEFT ── -->
+    <div class="tstep tstep--left">
+      <div class="tstep__img">
+        <img src="uploads/smoker-on-truck.jpg" alt="The Red Thorn smoker being moved into position" />
+      </div>
+      <div class="tstep__spine">
+        <div class="tstep__node">1</div>
+        <div class="tstep__arrow">
+          <!-- down arrow -->
+          <svg viewBox="0 0 18 24"><polyline points="9,2 9,16"/><polyline points="4,12 9,18 14,12"/></svg>
+          <!-- right arrow -->
+          <svg viewBox="0 0 24 18" style="margin-top:4px"><polyline points="2,9 16,9"/><polyline points="12,4 18,9 12,14"/></svg>
+        </div>
+      </div>
+      <div class="tstep__body">
+        <div class="tstep__day">Butchery day</div>
+        <h2 class="tstep__title">On the block,<br/><em>by hand.</em></h2>
+        <p class="tstep__desc">Whole cuts rest overnight and go onto the block early morning. Philipp breaks each one down himself — trimming, sizing, grinding to spec. Whole spices ground fresh. Everything mixed by hand. No paddles, no machines, no shortcuts.</p>
+      </div>
+    </div>
+
+    <!-- ── 2. Casing — image RIGHT ── -->
+    <div class="tstep tstep--right">
+      <div class="tstep__body">
+        <div class="tstep__day">Monday</div>
+        <h2 class="tstep__title">Rolled and<br/><em>tied by hand.</em></h2>
+        <p class="tstep__desc">Natural casings soaked overnight, fitted by hand. The mince goes in slowly — no pneumatic press. Each link twisted and tied individually. A little uneven, always. That is how you know nobody automated it.</p>
+      </div>
+      <div class="tstep__spine">
+        <div class="tstep__node">2</div>
+        <div class="tstep__arrow">
+          <svg viewBox="0 0 18 24"><polyline points="9,2 9,16"/><polyline points="4,12 9,18 14,12"/></svg>
+          <!-- left arrow -->
+          <svg viewBox="0 0 24 18" style="margin-top:4px"><polyline points="22,9 8,9"/><polyline points="12,4 6,9 12,14"/></svg>
+        </div>
+      </div>
+      <div class="tstep__img">
+        <img src="uploads/IMG_0887.jpg" alt="Freshly rolled Red Thorn sausages, just off the smoker" />
+      </div>
+    </div>
+
+    <!-- ── 3. Smoking — image LEFT ── -->
+    <div class="tstep tstep--left">
+      <div class="tstep__img">
+        <img src="uploads/524d5992-8787-44ab-a9b3-bff1044a9380.jpg" alt="Sausages hanging on the acacia-wood smoker rack at Red Thorn Farm" />
+      </div>
+      <div class="tstep__spine">
+        <div class="tstep__node">3</div>
+        <div class="tstep__arrow">
+          <svg viewBox="0 0 18 24"><polyline points="9,2 9,16"/><polyline points="4,12 9,18 14,12"/></svg>
+          <svg viewBox="0 0 24 18" style="margin-top:4px"><polyline points="2,9 16,9"/><polyline points="12,4 18,9 12,14"/></svg>
+        </div>
+      </div>
+      <div class="tstep__body">
+        <div class="tstep__day">Tuesday</div>
+        <h2 class="tstep__title">Acacia smoke.<br/><em>Before light.</em></h2>
+        <p class="tstep__desc">Joseph lights the smoker before sunrise. Acacia wood, cut and dried on the farm. No pellets, no liquid smoke. The sausages hang for four to seven hours. Philipp checks them by colour, by touch, and by smell. There is no probe and no app — just the fire, and time.</p>
+      </div>
+    </div>
+
+    <!-- ── 4. Packing — image RIGHT ── -->
+    <div class="tstep tstep--right">
+      <div class="tstep__body">
+        <div class="tstep__day">Packing &amp; dispatch</div>
+        <h2 class="tstep__title">Sealed, labelled,<br/><em>out the door.</em></h2>
+        <p class="tstep__desc">Esther weighs, labels, and vacuum-seals each pack. Every label carries the variety and the smoke date. Orders go out across Nairobi in insulated cooler boxes within 2-5 business days of confirmation. Ten days in the fridge, three months in the freezer — we recommend sooner.</p>
+      </div>
+      <div class="tstep__spine">
+        <div class="tstep__node">4</div>
+        <div class="tstep__arrow"></div>
+      </div>
+      <div class="tstep__img">
+        <img src="uploads/iSiweddings_MB-728.jpg" alt="Packing and labelling at Red Thorn Farm" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PULL QUOTE -->
+  <div class="craft-quote">
+    <blockquote>There are five ingredients in a Red Thorn sausage. None of them are surprising. The work is in not adding the sixth.</blockquote>
+    <cite>Philipp Achammer, Founder</cite>
+  </div>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <img src="assets/kedong-ridge.png" alt="" class="cta-band__ridge" />
+    <div class="cta-band__inner">
+      <div class="eyebrow cta-band__eyebrow center">Made by hand, weekly</div>
+      <h2 class="h-lg">See what's on<br/>the smoker.</h2>
+      <div class="cta-band__ctas">
+        <a class="btn btn-fill-light btn-lg" href="range.html">The Range</a>
+        <a class="btn btn-light btn-lg" href="https://wa.me/254719222299" target="_blank" rel="noopener">Order via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="foot-mount"></div>
+  <script src="chrome.js"></script>
+  <script src="enhancements.js"></script>
+</body>
+</html>

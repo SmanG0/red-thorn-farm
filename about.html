@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>About Us Red Thorn Farm</title>
+<meta name="description" content="The people, the fire, and the long way round. How Red Thorn Farm came to be." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="enhancements.css" />
+<script>window.RTPAGE = { id: 'about', heroOverlay: false };</script>
+<style>
+  /* ── magazine layout ── */
+  .mag {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad) var(--pad-y);
+  }
+
+  /* opening 2-col: prose left, portrait right */
+  .mag__lead {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+    padding-bottom: clamp(40px, 6vw, 72px);
+    border-bottom: 1px solid var(--hair);
+  }
+  .mag__text .lede {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  .mag__text p { margin-bottom: 18px; line-height: 1.75; color: var(--ink-2); }
+  .mag__text blockquote {
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 20px;
+    margin: 28px 0;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--accent);
+  }
+  .mag__img figure { margin: 0; }
+  .mag__img img { width: 100%; display: block; }
+  .mag__img figcaption {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* pull quote */
+  .mag__pull {
+    padding: clamp(36px, 5vw, 72px) 0;
+    border-bottom: 1px solid var(--hair);
+    text-align: center;
+  }
+  .mag__pull blockquote {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: clamp(22px, 3.2vw, 42px);
+    font-weight: 300;
+    line-height: 1.3;
+    max-width: 26ch;
+    margin: 0 auto;
+    color: var(--accent);
+  }
+
+  /* why kenya 2-col */
+  .mag__two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    padding: clamp(40px, 6vw, 72px) 0;
+    border-bottom: 1px solid var(--hair);
+    align-items: start;
+  }
+  .mag__two-col p {
+    margin-bottom: 16px;
+    line-height: 1.75;
+    color: var(--ink-2);
+  }
+  .mag__two-col figure { margin: 0; }
+  .mag__two-col img {
+    width: 100%;
+    height: clamp(260px, 42vh, 480px);
+    object-fit: cover;
+    display: block;
+  }
+  .mag__two-col figcaption {
+    display: block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* smaller dual strip */
+  .dual-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .dual-strip figure { margin: 0; position: relative; overflow: hidden; }
+  .dual-strip img {
+    width: 100%;
+    height: clamp(220px, 32vh, 380px);
+    object-fit: cover;
+    display: block;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .dual-strip figure:hover img { transform: scale(1.03); }
+  .dual-strip figcaption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 32px 20px 14px;
+    background: linear-gradient(to top, rgba(0,0,0,.5), transparent);
+    color: rgba(255,255,255,.85);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ── REDESIGNED TIMELINE ── */
+  .rt-timeline-wrap {
+    padding: clamp(40px, 6vw, 72px) 0;
+    border-bottom: 1px solid var(--hair);
+  }
+  .rt-timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    gap: 0;
+  }
+  /* horizontal connecting line */
+  .rt-timeline::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), var(--hair) 80%);
+    opacity: 0.45;
+    z-index: 0;
+  }
+  .rt-timeline li {
+    padding: 0 20px 0 0;
+    position: relative;
+  }
+  .rt-tl__marker { margin-bottom: 22px; position: relative; z-index: 1; }
+  .rt-tl__dot {
+    display: block;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    outline: 1px solid var(--accent);
+  }
+  .rt-tl__dot--now {
+    background: var(--ink);
+    outline-color: var(--ink);
+    width: 11px; height: 11px;
+  }
+  .rt-tl__when {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .rt-tl__content h4 {
+    font-family: var(--f-display);
+    font-weight: 500;
+    font-size: clamp(15px, 1.6vw, 19px);
+    line-height: 1.2;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .rt-tl__content p {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin: 0;
+  }
+  /* ghost number behind each item */
+  .rt-tl__num {
+    display: block;
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: clamp(52px, 5vw, 80px);
+    line-height: 0.85;
+    color: var(--accent);
+    opacity: 0.1;
+    margin-bottom: 2px;
+    user-select: none;
+  }
+  @media (max-width: 900px) {
+    .rt-timeline { grid-template-columns: 1fr; }
+    .rt-timeline::before {
+      top: 0; bottom: 0;
+      left: 4px; right: auto;
+      width: 1px; height: auto;
+    }
+    .rt-timeline li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 0 20px;
+      padding: 0 0 32px;
+      align-items: start;
+    }
+    .rt-tl__marker { display: flex; justify-content: center; padding-top: 5px; margin-bottom: 0; }
+    .rt-tl__dot { margin: 0; }
+    .rt-tl__num { display: none; }
+  }
+
+  /* people */
+  .people-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
+  }
+  .person-card { position: relative; overflow: hidden; }
+  .person-card__photo { aspect-ratio: 3/4; overflow: hidden; }
+  .person-card__photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .person-card:hover .person-card__photo img { transform: scale(1.04); }
+  .person-card__info {
+    padding: 18px 22px 22px;
+    background: var(--paper);
+    border-top: 1px solid var(--hair);
+  }
+  .person-card__name {
+    font-family: var(--f-display);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 0 2px;
+    color: var(--ink);
+  }
+  .person-card__role {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* manifesto 2-col */
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(32px, 5vw, 72px);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .manifesto-grid li {
+    display: grid;
+    grid-template-columns: 2em 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 22px 0;
+    border-top: 1px solid var(--hair);
+  }
+  .manifesto-grid .num {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .manifesto-grid h4 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .manifesto-grid p {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .mag__lead { grid-template-columns: 1fr; }
+    .mag__two-col { grid-template-columns: 1fr; }
+    .people-grid { grid-template-columns: 1fr; }
+    .manifesto-grid { grid-template-columns: 1fr; }
+    .dual-strip { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body data-screen-label="02 About">
+
+  <div id="nav-mount"></div>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero" data-screen-label="Page hero">
+    <div class="page-hero__eyebrow eyebrow">About us</div>
+    <h1 class="h-xl">
+      Big farm.<br/>
+      <em>Great ideas.</em>
+    </h1>
+  </header>
+
+  <div class="mag">
+
+    <!-- ── LEAD: story + portrait ── -->
+    <div class="mag__lead">
+      <div class="mag__text">
+        <p class="lede">It started not in a kitchen, but in a market garden in De Bilt, Utrecht — and it changed the way Philipp understood food entirely.</p>
+        <p>Working in a permaculture market garden made something clear that no restaurant had: how much care goes into growing something properly, and how rarely that care is acknowledged by the time food reaches a plate. The farmers who truly care for the soil, respect the seasons, and look after their animals are the ones who deserve to be at the centre of the story.</p>
+        <p>That realisation led Philipp into a restaurant that worked closely with the same farm. There he learned the other side: how to respect a good product by transforming it well. How to let the ingredient lead. How cooking in proximity to the source changes everything about the way you work.</p>
+        <blockquote>"Once you understand what a farm can produce when it is done right, you cannot go back to the other kind."</blockquote>
+        <p>At De Vuurplaats, he honed what had become an obsession: smoke, fire, and the slow transformation of honest ingredients. Open-flame cooking over acacia and hardwood, hands in the heat, no shortcuts. And then the conclusion, arrived at gradually: that his skills were best used not in service of a restaurant, but in service of the product itself. That is why Red Thorn exists.</p>
+      </div>
+      <div class="mag__img">
+        <figure>
+          <img src="uploads/philipp-pig-spit.jpg"
+               alt="Philipp operating a whole pig on the spit at De Vuurplaats, Netherlands" style="object-position: center 30%;" />
+          <figcaption>De Vuurplaats, De Bilt · Photography: Ken Stoffels</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- ── PULL QUOTE ── -->
+    <div class="mag__pull">
+      <blockquote>The fat remembers what it ate. That is what we protect.</blockquote>
+    </div>
+
+    <!-- ── WHY KENYA + farm photo ── -->
+    <div class="mag__two-col">
+      <div>
+        <div class="eyebrow" style="margin-bottom:18px;">Why Kenya</div>
+        <p>Kenya has exceptional raw material: grass-fed beef, pork from small holdings in the Rift Valley, lamb that has grazed on acacia scrub its whole life. The fat remembers what it ate. The problem is that almost none of it makes it past the slaughterhouse without being turned into something less — something pink, smooth, and anonymous.</p>
+        <p>Red Thorn started with a hand-built smoker, a second-hand butcher's block, and a simple idea: that this country deserves a sausage made from its own best ingredients, handled with the care they have earned. The first batch went to friends. The waiting list came quickly after.</p>
+      </div>
+      <figure>
+        <img src="uploads/IMG_0813.jpg" alt="The Red Thorn farm in morning light, Kedong" />
+        <figcaption>The farm, morning · Kedong Valley</figcaption>
+      </figure>
+    </div>
+
+    <!-- ── DUAL STRIP ── -->
+    <div class="dual-strip">
+      <figure>
+        <img src="uploads/iSiweddings_MB-728.jpg" alt="People gathered at a Red Thorn event" />
+        <figcaption>A Red Thorn gathering · Nairobi</figcaption>
+      </figure>
+      <figure>
+        <img src="uploads/IMG_0887.jpg" alt="The farm at dusk, fire lit" />
+        <figcaption>Evening fire · Kedong, 2025</figcaption>
+      </figure>
+    </div>
+
+    <!-- ── TIMELINE ── -->
+    <div class="rt-timeline-wrap">
+      <div class="eyebrow" style="margin-bottom: clamp(24px, 4vw, 40px);">How it built</div>
+      <ol class="rt-timeline">
+        <li>
+          <div class="rt-tl__marker"><span class="rt-tl__dot"></span></div>
+          <div class="rt-tl__content">
+            <span class="rt-tl__when">Netherlands</span>
+            <span class="rt-tl__num">01</span>
+            <h4>Market garden, De Bilt</h4>
+            <p>Working a permaculture market garden in Utrecht teaches Philipp what good farming actually looks like — and how rarely it is honoured downstream.</p>
+          </div>
+        </li>
+        <li>
+          <div class="rt-tl__marker"><span class="rt-tl__dot"></span></div>
+          <div class="rt-tl__content">
+            <span class="rt-tl__when">Restaurant</span>
+            <span class="rt-tl__num">02</span>
+            <h4>Farm to kitchen</h4>
+            <p>A restaurant working directly with the same farm. Here he learns to respect great produce — and how proximity to the source changes the way you cook.</p>
+          </div>
+        </li>
+        <li>
+          <div class="rt-tl__marker"><span class="rt-tl__dot"></span></div>
+          <div class="rt-tl__content">
+            <span class="rt-tl__when">De Vuurplaats</span>
+            <span class="rt-tl__num">03</span>
+            <h4>Fire school</h4>
+            <p>Open-fire cooking in De Bilt. Smoke, hardwood, whole animals. The skills sharpen. The conviction forms: work with the product directly.</p>
+          </div>
+        </li>
+        <li>
+          <div class="rt-tl__marker"><span class="rt-tl__dot"></span></div>
+          <div class="rt-tl__content">
+            <span class="rt-tl__when">2024</span>
+            <span class="rt-tl__num">04</span>
+            <h4>Red Thorn opens</h4>
+            <p>First batch leaves the farm. A hand-built smoker, a butcher's block, and sausages made from Kenya's best ingredients — handled properly.</p>
+          </div>
+        </li>
+        <li>
+          <div class="rt-tl__marker"><span class="rt-tl__dot rt-tl__dot--now"></span></div>
+          <div class="rt-tl__content">
+            <span class="rt-tl__when">Now</span>
+            <span class="rt-tl__num">05</span>
+            <h4>Weekly batches</h4>
+            <p>Made every week, delivered Nairobi-wide in 2-5 business days. The waiting list is a feature, not a problem.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- ── THE PERSON ── -->
+    <div style="padding: clamp(40px, 6vw, 72px) 0 0;">
+      <div class="eyebrow" style="margin-bottom: 12px;">The person behind it</div>
+      <p style="max-width: 54ch; margin-bottom: clamp(28px, 4vw, 52px); color: var(--ink-2); line-height: 1.7;">
+        Philipp does the butchery, the curing, the smoking, and the sourcing. One person,
+        one standard.
+      </p>
+    </div>
+    <div class="people-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="person-card">
+        <div class="person-card__photo">
+          <img src="uploads/production-kitchen.jpg" alt="The Red Thorn production kitchen, Kedong" style="object-position: center 40%;" />
+        </div>
+        <div class="person-card__info">
+          <div class="person-card__name">Philipp Achammer</div>
+          <div class="person-card__role">Founder · Butcher · Keeper of the fire</div>
+          <p style="font-size:12px;color:var(--ink-2);margin:10px 0 0;line-height:1.6;font-style:italic;">"I want to bring quality that is generational to Kenya — to put us on the global map of the best food products."</p>
+        </div>
+      </div>
+      <div class="person-card">
+        <div class="person-card__photo">
+          <img src="uploads/iSiweddings_MB-248.jpg" alt="Philipp at the fire, Red Thorn Farm" style="object-position: center 30%;" />
+        </div>
+        <div class="person-card__info">
+          <div class="person-card__name">The craft</div>
+          <div class="person-card__role">Sourced · Smoked · Hand-tied</div>
+          <p style="font-size:12px;color:var(--ink-2);margin:10px 0 0;line-height:1.6;font-style:italic;">"Source whole. Season simply. Cook slow. Never dress up what is already honest."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MANIFESTO ── -->
+    <div style="padding: clamp(40px, 6vw, 72px) 0;">
+      <div class="eyebrow" style="margin-bottom: 12px;">What we believe</div>
+      <h2 class="h-md" style="max-width: 24ch; margin-bottom: clamp(28px, 4vw, 52px);">
+        A short list. We mean every <em>one of them.</em>
+      </h2>
+      <ol class="manifesto-grid">
+        <li>
+          <span class="num">i.</span>
+          <div>
+            <h4>Whole cuts, never trim.</h4>
+            <p>Every sausage is built from cuts we could roast as they are — shoulder, belly, leg. Nothing reclaimed or rebuilt from by-product.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">ii.</span>
+          <div>
+            <h4>Five-ingredient rule.</h4>
+            <p>Meat, fat, salt, spice, casing. If the recipe doesn't fit, the recipe is wrong. No nitrates, no fillers, no rusk.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">iii.</span>
+          <div>
+            <h4>Real smoke, real wood.</h4>
+            <p>Acacia, cut on the farm, dried for months. No liquid smoke, no flavouring bottles in the cupboard.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">iv.</span>
+          <div>
+            <h4>Hands, not machines.</h4>
+            <p>Cased, tied, and weighed by hand. The links are a little uneven. That is how you know nobody automated it.</p>
+          </div>
+        </li>
+        <li>
+          <span class="num">v.</span>
+          <div>
+            <h4>Small enough to know your name.</h4>
+            <p>We make what we can make properly in a week. The waiting list is a feature, not a bug.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+  </div><!-- /mag -->
+
+  <!-- CTA BAND -->
+  <section class="cta-band" data-screen-label="CTA">
+    <img src="assets/kedong-ridge.png" alt="" class="cta-band__ridge" />
+    <div class="cta-band__inner">
+      <div class="eyebrow cta-band__eyebrow center">Hungry yet?</div>
+      <h2 class="h-lg">See what's on<br/>the smoker.</h2>
+      <div class="cta-band__ctas">
+        <a class="btn btn-fill-light btn-lg" href="https://wa.me/254719222299" target="_blank" rel="noopener">Order via WhatsApp</a>
+        <a class="btn btn-light btn-lg" href="range.html">See the range</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="foot-mount"></div>
+  <script src="chrome.js"></script>
+  <script src="enhancements.js"></script>
+</body>
+</html>
